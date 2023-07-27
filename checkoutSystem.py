@@ -1,5 +1,24 @@
+from collections import Counter
+
 def price(items_pricing, scanned_items):
-    return 0
+
+    total_price = 0
+    items_count = Counter(scanned_items)
+
+    for item, n in items_count.items():
+
+        count = n
+        
+        if(items_pricing[item][1] != None):
+
+            while(count - items_pricing[item][1][0] >= 0):
+                
+                count -= items_pricing[item][1][0]
+                total_price += items_pricing[item][1][1]
+
+        total_price += count*items_pricing[item][0]
+
+    return total_price
 
 items_pricing = {
     'A': (50, (3, 130)),
@@ -7,6 +26,7 @@ items_pricing = {
     'C': (20, None),
     'D': (15, None),
 }
+
 
 assert price(items_pricing, "") == 0
 assert price(items_pricing, "A") == 50
