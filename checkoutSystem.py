@@ -8,16 +8,17 @@ def price(items_pricing, scanned_items):
     for item, n in items_count.items():
 
         count = n
+        remaining = n
         
         if(items_pricing[item][1] != None):
+            if(count - items_pricing[item][1][0] >= 0):
+                count = n // items_pricing[item][1][0]                
+                remaining = n % items_pricing[item][1][0]
+                total_price += count * items_pricing[item][1][1]
 
-            while(count - items_pricing[item][1][0] >= 0):
-                
-                count -= items_pricing[item][1][0]
-                total_price += items_pricing[item][1][1]
+        total_price += remaining*items_pricing[item][0]
 
-        total_price += count*items_pricing[item][0]
-
+    print (total_price)
     return total_price
 
 items_pricing = {
